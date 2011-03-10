@@ -61,6 +61,22 @@ Upcoming changes</a>
 <div id="trunk" style="display:none"><!--=TRUNK-BEGIN=-->
 <ul class=image>
   <li class=bug>
+    Fixed a deadlock when upstream and downstream jobs are blocked on each other
+    (<a href="http://issues.jenkins-ci.org/browse/JENKINS-8929">issue 8929</a>)
+  <li class=rfe>
+    Proactively watch out for incomplete extensions to avoid cryptic NPE.
+    (<a href="http://issues.jenkins-ci.org/browse/JENKINS-8866">issue 8866</a>)
+  <li class=rfe>
+    Added more event callbacks on <tt>ComputerListener</tt>
+    (<a href="http://jenkins.361315.n4.nabble.com/Hooking-into-failed-slave-launches-td3339646.html">thread</a>)
+</ul>
+</div><!--=TRUNK-END=-->
+
+<!-- these changes are controlled by the release process. DO NOT MODIFY -->
+<div id="rc" style="display:none;"><!--=BEGIN=-->
+<h3><a name=v1.401>What's new in 1.401</a> <!--=DATE=--></h3>
+<ul class=image>
+  <li class=bug>
     Fix for JENKINS-8711 breaks deployments with credentials
     (<a href="http://issues.jenkins-ci.org/browse/JENKINS-8939">issue 8939</a>)
   <li class=bug>
@@ -84,12 +100,6 @@ Upcoming changes</a>
     Defined a mechanism to replace some of the key UI text.
     (<a href="http://issues.jenkins-ci.org/browse/JENKINS-8579">issue 8579</a>)
 </ul>
-</div><!--=TRUNK-END=-->
-
-<!-- these changes are controlled by the release process. DO NOT MODIFY -->
-<div id="rc" style="display:none;"><!--=BEGIN=-->
-<h3><a name=v1.401>What's new in 1.401</a> <!--=DATE=--></h3>
-<!--=RC-CHANGES=-->
 </div><!--=END=-->
 <h3><a name=v1.400>What's new in 1.400</a> (2011/03/06)</h3>
 <ul class=image>

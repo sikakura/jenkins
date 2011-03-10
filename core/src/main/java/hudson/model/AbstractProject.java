@@ -100,6 +100,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1073,36 +1074,34 @@ public abstract class AbstractProject<P extends AbstractProject<P,R>,R extends A
     }
 
     /**
-     * Returns the project if any of the downstream project (or itself) is either
-     * building or is in the queue.
+     * Returns the project if any of the downstream project is either
+     * building, waiting, pending or buildable.
      * <p>
      * This means eventually there will be an automatic triggering of
      * the given project (provided that all builds went smoothly.)
      */
     protected AbstractProject getBuildingDownstream() {
-    	DependencyGraph graph = Hudson.getInstance().getDependencyGraph();
-        Set<AbstractProject> tups = graph.getTransitiveDownstream(this);
-        tups.add(this);
-        for (AbstractProject tup : tups) {
-            if(tup!=this && (tup.isBuilding() || tup.isInQueue()))
+        Set<Task> unblockedTasks = Hudson.getInstance().getQueue().getUnblockedTasks();
+
+        for (AbstractProject tup : Hudson.getInstance().getDependencyGraph().getTransitiveDownstream(this)) {
+			if (tup!=this && (tup.isBuilding() || unblockedTasks.contains(tup)))
                 return tup;
         }
         return null;
     }
 
     /**
-     * Returns the project if any of the upstream project (or itself) is either
+     * Returns the project if any of the upstream project is either
      * building or is in the queue.
      * <p>
      * This means eventually there will be an automatic triggering of
      * the given project (provided that all builds went smoothly.)
      */
     protected AbstractProject getBuildingUpstream() {
-    	DependencyGraph graph = Hudson.getInstance().getDependencyGraph();
-        Set<AbstractProject> tups = graph.getTransitiveUpstream(this);
-        tups.add(this);
-        for (AbstractProject tup : tups) {
-            if(tup!=this && (tup.isBuilding() || tup.isInQueue()))
+        Set<Task> unblockedTasks = Hudson.getInstance().getQueue().getUnblockedTasks();
+
+        for (AbstractProject tup : Hudson.getInstance().getDependencyGraph().getTransitiveUpstream(this)) {
+			if (tup!=this && (tup.isBuilding() || unblockedTasks.contains(tup)))
                 return tup;
         }
         return null;
